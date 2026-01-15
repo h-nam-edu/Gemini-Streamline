@@ -27,10 +27,20 @@ with st.container():
         st.write("[Github > ](https://github.com/Wilson-ZheLin/Streamline-Analyst)")
 
 # INTRO SECTION
+# INTRO SECTION
 with st.container():
     st.divider()
     if 'lottie' not in st.session_state:
-        st.session_state.lottie_url1, st.session_state.lottie_url2 = load_lottie()
+        # 1. Load into a temporary variable first
+        lottie_data = load_lottie() 
+        
+        # 2. Check if data exists before unpacking
+        if lottie_data: 
+            st.session_state.lottie_url1, st.session_state.lottie_url2 = lottie_data
+        else:
+            # Fallback if loading fails to prevent crash
+            st.session_state.lottie_url1, st.session_state.lottie_url2 = None, None
+            
         st.session_state.lottie = True
 
     left_column_r1, right_column_r1 = st.columns([6, 4])
@@ -38,12 +48,14 @@ with st.container():
         st.header("What can Streamline Analyst do?")
         st.write(introduction_message()[0])
     with right_column_r1:
-        if st.session_state.lottie:
+        # 3. Only show animation if the specific URL is not None
+        if st.session_state.lottie and st.session_state.lottie_url1:
             st_lottie(st.session_state.lottie_url1, height=280, key="animation1")
 
     left_column_r2, _, right_column_r2 = st.columns([6, 1, 5])
     with left_column_r2:
-        if st.session_state.lottie:
+        # 4. Same check for the second animation
+        if st.session_state.lottie and st.session_state.lottie_url2:
             st_lottie(st.session_state.lottie_url2, height=200, key="animation2")
     with right_column_r2:
         st.header("Simple to Use")
@@ -71,8 +83,8 @@ with st.container():
         
     with right_column:
         SELECTED_MODEL = st.selectbox(
-        'Which OpenAI model do you want to use?',
-        ('GPT-4-Turbo', 'GPT-3.5-Turbo'))
+        'Which Model do you want to use?',
+        ('gemini-flash-latest', 'gemini-pro-latest'))
 
         MODE = st.selectbox(
         'Select proper data analysis mode',
@@ -94,7 +106,8 @@ with st.container():
 
     # Start Analysis
     if st.session_state.button_clicked:
-        GPT_MODEL = 4 if SELECTED_MODEL == 'GPT-4-Turbo' else 3.5
+        # We pass the string directly now, instead of converting to numbers like 4 or 3.5
+        GPT_MODEL = SELECTED_MODEL
         with st.container():
             if "DF_uploaded" not in st.session_state:
                 st.error("File is empty!")

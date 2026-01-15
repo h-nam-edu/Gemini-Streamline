@@ -1,32 +1,21 @@
-# Data Manipulation & Core
 numpy<2.0.0
 pandas==2.2.0
 scipy==1.12.0
 joblib==1.2.0
 PyYAML==6.0.1
 requests==2.31.0
-
-# Machine Learning & Stats
 scikit-learn==1.4.0
 xgboost==2.0.3
-imbalanced-learn==0.12.2     # Bumped from 0.12.0 for Sklearn 1.4+ compat
-statsmodels==0.14.2          # Bumped from 0.14.0 for Pandas 2.2+ compat
-
-# LLM & LangChain
-langchain
-langchain-community
-langchain-openai
-openai
-
-# Visualization
+imbalanced-learn==0.12.2
+statsmodels==0.14.2
+langchain==1.2.3
+langchain-community==0.4.1
+langchain-openai==1.1.7
+openai==2.15.0
 matplotlib==3.7.2
 seaborn==0.13.2
 plotly==5.18.0
 wordcloud==1.9.3
-
-# Web App / UI
 streamlit==1.31.0
 streamlit-lottie==0.0.5
-
-# NLP
 nltk==3.8.1
